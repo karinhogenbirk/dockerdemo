@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hi! Welcome to my profile</h1>
+    <img src="karinhog.png" alt="picture-of-karin">
+    <h2>Name: Karin</h2>
+    <h2>Interests: Programming, travelling, sports</h2>
+    <button onclick="getContact()">Get my contact!</button>
+    <h3 id="contact"></h3>
+
+    <input type="text">
+    <button>Send me a message</button>
+</body>
+<script>
+    async function getContact() {
+        const response = await fetch("http://localhost:3000/contact");
+        const data = await response.json()
+        console.log(data)
+        document.getElementById("contact").innerText = data.message;
+    }
+</script>
+</html>
