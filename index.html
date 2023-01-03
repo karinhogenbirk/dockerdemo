@@ -8,14 +8,16 @@
 </head>
 <body>
     <h1>Hi! Welcome to my profile</h1>
-    <img src="karinhog.png" alt="picture-of-karin">
+    <img src="images/karinhog.png" alt="picture-of-karin">
     <h2>Name: Karin</h2>
     <h2>Interests: Programming, travelling, sports</h2>
     <button onclick="getContact()">Get my contact!</button>
     <h3 id="contact"></h3>
-
-    <input type="text">
-    <button>Send me a message</button>
+<form method="post" id="messageForm">
+    <input type="text" id="message" placeholder="Write message here">
+    <input type="text" id="sender" placeholder="Write your name here">
+    <button type="submit">Send me a message</button>
+</form>
 </body>
 <script>
     async function getContact() {
@@ -24,5 +26,32 @@
         console.log(data)
         document.getElementById("contact").innerText = data.message;
     }
+
+
+    let form = document.getElementById("messageForm");
+
+    form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    var message = document.getElementById("message").value;
+    var name = document.getElementById("sender").value;
+
+    sendMessage(message, name)
+    });
+  
+
+    async function sendMessage(message, name) {
+        const response = await fetch("http://localhost:3000/send-message", {
+        method: "POST",
+        body: JSON.stringify({ message: message, name: name}),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(data)
+    };
+
+
 </script>
 </html>
